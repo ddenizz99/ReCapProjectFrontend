@@ -1,0 +1,24 @@
+<div *ngIf="!dataSuccess" class="alert alert-danger" role="alert">
+    {{dataMessage}}
+</div>
+
+<table *ngIf="dataSuccess" class="table table-dark table-striped">
+    <thead>
+        <tr>
+        <th scope="col">#</th>
+        <th scope="col">Ad</th>
+        <th scope="col">Soyad</th>
+        <th scope="col">Email</th>
+        <th scope="col">Şirket Adı</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let customer of customers">
+        <th scope="row">*</th>
+        <td>{{customer.firstName}}</td>
+        <td>{{customer.lastName}}</td>
+        <td>{{customer.email}}</td>
+        <td>{{customer.companyName}}</td>
+        </tr>
+    </tbody>
+</table>
