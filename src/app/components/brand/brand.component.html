@@ -1,14 +1,33 @@
-<table class="table table-dark table-striped">
-  <thead>
-    <tr>
-      <th scope="col">Id</th>
-      <th scope="col">Marka</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let brand of brands">
-      <th scope="row">{{brand.id}}</th>
-      <td>{{brand.brandName}}</td>
-    </tr>
-  </tbody>
-</table>
+<div class="container">
+  <div class="row">
+
+    <div class="item col-md-12">
+      <div class="mb-3">
+        <label for="filterText" class="form-label">Marka Ara</label>
+        <input type="text" [(ngModel)]="filterText" class="form-control" id="filterText" placeholder="Arama ifadesi giriniz">
+      </div>
+    </div>
+
+    <div *ngIf="filterText" class="col-md-12">
+      <div class="alert alert-success" role="alert">
+        <a class="alert-link">"{{filterText}}"</a> araması sonucları.
+      </div>
+    </div>
+
+    <div *ngIf="errorMessage" class="col-md-12">
+      <div class="alert alert-danger" role="alert">
+        {{errorMessage}}
+      </div>
+    </div>
+
+    <div *ngFor="let brand of brands | brandFilterPipe:filterText" class="item col-md-4 col-sm-4">
+      <div class="card h-100" routerLink="/cars/brand/{{brand.id}}">     
+        <img src="./assets/logo.png" class="card-img-top" alt="...">
+        <div class="card-body">
+          <h5 class="card-title">{{brand.brandName}}</h5>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

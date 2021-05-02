@@ -7,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NaviComponent implements OnInit {
 
-  navLogo:string = 'https://upload.wikimedia.org/wikipedia/commons/f/f1/Logo_of_Show_TV.png';
+  navLogo:string = './assets/logo.png';
 
   constructor() { }
 

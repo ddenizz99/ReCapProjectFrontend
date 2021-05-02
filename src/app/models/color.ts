@@ -1,4 +1,5 @@
 export interface Color{
     id:number,
-    colorName:string
+    colorName:string,
+    colorCode:string
 }

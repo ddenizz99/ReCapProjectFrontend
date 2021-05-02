@@ -1,0 +1,10 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-12" style="margin-top: 50px;">
+            <div *ngIf="paymentForm.status == 'failure'" class="alert alert-danger" role="alert">
+                {{paymentForm.errorMessage}}
+              </div>
+            <div id="iyzipay-checkout-form" class="responsive"></div>
+        </div>
+    </div>
+</div>

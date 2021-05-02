@@ -1,0 +1,101 @@
+<div class="container">
+  <div class="row">
+      <div class="item col-md-5">
+          <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+              <div class="carousel-inner">
+                <div *ngFor="let carImage of carImages; let first = first;" class="carousel-item {{first ? 'active' : ''}}">
+                  <img src="https://localhost:44306{{carImage.imagePath}}" height="400" class="d-block w-100" alt="...">
+                </div>
+              </div>
+              <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+              </button>
+              <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+              </button>
+          </div>
+      </div>
+      <div class="item col-md-7">
+          <h2>Araç Bilgileri</h2>
+          <ul class="list-group">
+              <li class="list-group-item"><b>Renk : </b>{{carDetail.colorName}}</li>
+              <li class="list-group-item"><b>Marka : </b>{{carDetail.brandName}}</li>
+              <li class="list-group-item"><b>Günlük Fiyat : </b>{{carDetail.dailyPrice | currency:"TRY":"₺"}}</li>
+              <li class="list-group-item"><b>Açıklama : </b>{{carDetail.description}}</li>
+          </ul>
+          <div class="item d-grid gap-2">
+            <button class="btn btn-secondary" type="button">Favorilere Ekle</button>
+            <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#carRental" type="button">Aracı Kirala</button>
+          </div>
+      </div>
+  </div>
+
+  <div class="row">
+
+    <div class="item col-md-12">
+      <span><b>Benzer Araçlar</b></span>
+      <hr>
+    </div>
+
+    <div class="col-md-12">
+      <div class="row">
+
+        <div *ngIf="!carsLoaded" class="item col-full d-flex align-items-center">
+          <strong>Arabalar Yükleniyor...</strong>
+          <div class="spinner-border ms-auto" role="status" aria-hidden="true"></div>
+        </div>
+
+        <div *ngFor="let car of cars | carFilterPipe:empty:carDetail.brandName | hideCarPipe:carDetail | carLimitPipe:4" class="item col-md-3 col-sm-4">
+          <div class="card h-100">     
+            <img src="{{carImagePath + car.coverPhotoPath}}" class="card-img-top" alt="...">
+            <div class="card-body">
+              <h5 class="card-title">{{car.brandName}}</h5>
+              <p class="card-text">{{car.description}}</p>
+              <p class="card-text"><b>Günlük Fiyat : </b>{{car.dailyPrice | currency:"TRY":"₺"}}</p>
+              <a routerLink="/car/{{car.carId}}" class="btn btn-primary">Aracı İncele</a>
+            </div>
+          </div>
+        </div>
+
+        <div *ngIf="!(cars | carFilterPipe:empty:carDetail.brandName | hideCarPipe:carDetail).length" class="item col-md-12 alert alert-danger" role="alert">
+          Bu kategoride gösterilecek başka araç yok.
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="carRental" tabindex="-1" aria-labelledby="carRentalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="carRentalLabel">Aracı Kirala</h5>
+        <button type="button" #closebutton class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <form [formGroup]="carRentalForm" (ngSubmit)="addRental()">
+        <div class="modal-body">
+          <div class="mb-3">
+            <label for="rentDate" class="col-form-label">RentDate</label>
+            <input type="date" id="rentDate" formControlName="rentDate" datetime="yyyy-MM-dd HH:mm:ss" class="form-control">
+          </div>
+          <div class="mb-3">
+            <label for="returnDate" class="col-form-label">ReturnDate</label>
+            <input type="date" id="returnDate" formControlName="returnDate" class="form-control">
+          </div>
+          <div class="mb-3">
+            <div *ngIf="rentalFormMessage" [class]="messageClass" role="alert">
+              {{rentalFormMessage}}
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kapat</button>
+          <button type="submit" class="btn btn-primary">Kirala</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

@@ -1,8 +1,13 @@
+<h3>Filtreleme</h3>
 <div class="list-group">
-    <button type="button" class="list-group-item list-group-item-action active" aria-current="true">
-      The current button
-    </button>
-    <button type="button" class="list-group-item list-group-item-action">A second item</button>
-    <button type="button" class="list-group-item list-group-item-action">A third button item</button>
-    <button type="button" class="list-group-item list-group-item-action">A fourth button item</button>
-  </div>
+  <button type="button" class="list-group-item list-group-item-action disabled category-title" aria-current="true">
+    Marka
+  </button>
+  <button *ngFor="let brand of brands" type="button" class="list-group-item list-group-item-action" routerLink="/cars/brand/{{brand.id}}">{{brand.brandName}}</button>
+  <button type="button" class="list-group-item list-group-item-action disabled category-title" aria-current="true">
+    Renk
+  </button>
+  <button *ngFor="let color of colors" (click)="setCurrentColor(color)" type="button" [class]="getCurrentColorClass(color)" routerLink="/cars/color/{{color.id}}">{{color.colorName}}</button>
+</div>
+
+

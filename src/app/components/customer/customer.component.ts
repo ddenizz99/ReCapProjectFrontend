@@ -11,7 +11,7 @@ export class CustomerComponent implements OnInit {
 
   customers:UserDetailDto[] = [];
   dataSuccess = false;
-  dataMessage = '';
+  dataMessage = 'Veriye Erişilemiyor!';
   constructor(private customerService:CustomerService) { }
 
   ngOnInit(): void {

@@ -10,6 +10,8 @@ import { BrandService } from 'src/app/services/brand.service';
 export class BrandComponent implements OnInit {
 
   brands:Brand[] = [];
+  filterText:string = "";
+  errorMessage:string = "";
   constructor(private brandService:BrandService) { }
 
   ngOnInit(): void {
@@ -20,6 +22,10 @@ export class BrandComponent implements OnInit {
     this.brandService.getBrands()
     .subscribe(response => {
       this.brands = response.data;
+    }, responseError => {
+      if (!responseError.status) {
+        this.errorMessage = "Bağlantı Hatası! : Veriye erişilemiyor.";
+      }
     });
   }
 

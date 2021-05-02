@@ -1,0 +1,24 @@
+<table class="table table-dark table-striped">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Marka</th>
+            <th scope="col">Açıklama</th>
+            <th scope="col">Müşteri Ad Soyad</th>
+            <th scope="col">Şirket Adı</th>
+            <th scope="col">Kiralama Tarihi</th>
+            <th scope="col">Araç Teslim Tarihi</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let rentalDetail of rentalDetails">
+            <th scope="row">*</th>
+            <td>{{rentalDetail.brandName}}</td>
+            <td>{{rentalDetail.carDescription}}</td>
+            <td>{{rentalDetail.customerFirstName + " " + rentalDetail.customerLastName}}</td>
+            <td>{{rentalDetail.customerCompanyName}}</td>
+            <td>{{rentalDetail.rentDate | date}}</td>
+            <td>{{(rentalDetail.returnDate) ? rentalDetail.returnDate : "-"}}</td>
+        </tr>
+    </tbody>
+</table>

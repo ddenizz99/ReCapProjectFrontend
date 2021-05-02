@@ -1,0 +1,104 @@
+<div id="myCarousel" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-indicators">
+      <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+      <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+    </div>
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <img class="bd-placeholder-img" width="100%" height="100%" src="./assets/slider/slide-1.jpg">
+
+        <div class="container">
+          <div class="carousel-caption text-start">
+            <h1>Bahar Fırsatları</h1>
+            <p>3 aylık kiralamalarda %20'ye varan indirimler Rent A Car da sizleri bekliyor.</p>
+            <p><a class="btn btn-lg btn-primary" routerLink="/cars">Takip Et</a></p>
+          </div>
+        </div>
+      </div>
+      <div class="carousel-item">
+        <img class="bd-placeholder-img" width="100%" height="100%" src="./assets/slider/slide-2.jpg">
+
+        <div class="container">
+          <div class="carousel-caption">
+            <h1>Yeni Nesil Konforlu Araçlar</h1>
+            <p>Her sınıfta kaliteli çeşitler. Rent A Car farkıyla sizlerle.</p>
+            <p><a class="btn btn-lg btn-primary" routerLink="/cars">İncele</a></p>
+          </div>
+        </div>
+      </div>
+      
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#myCarousel" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+</div>
+
+<div class="container">
+
+  <form #carfilter = "ngForm" (ngSubmit)="setCurrentFilter(carfilter.value)">
+    <div class="row">
+      <div class="col-md-4">
+        <span>Marka</span>
+        <select class="form-select form-select-lg mb-3" name="brand" aria-label=".form-select-lg example" ngModel>
+          <option disabled selected class="color-red">{{!brandsLoaded ? 'Yükleniyor...' : '---- Marka ----'}}</option>
+          <option *ngFor="let brand of brands" value="{{brand.brandName}}">{{brand.brandName}}</option>
+        </select>
+      </div>
+      <div class="col-md-4">
+        <span>Renk</span>
+        <select class="form-select form-select-lg mb-3" name="color" aria-label=".form-select-lg example" ngModel>
+          <option disabled selected class="color-red">{{!colorsLoaded ? 'Yükleniyor...' : '---- Renk ----'}}</option>
+          <option *ngFor="let color of colors" value="{{color.colorName}}">{{color.colorName}}</option>
+        </select>
+      </div>
+      <div class="col-md-4 d-flex align-items-center">
+        <button type="submit" class="btn btn-lg btn-success" style="width: 100%;">Araç Bul</button>
+      </div>
+
+      <div *ngIf="emptyFilterButton" class="col-md-12 text-center">
+        <hr>
+        <b class="clear-selection" (click)="clearSelection(); carfilter.reset();">Seçimi temizlemek için tıklayınız.</b>
+      </div>
+
+    </div>
+  </form>
+
+  <div class="row">
+
+    <div *ngIf="!carsLoaded && !errorMessage" class="item col-full d-flex align-items-center">
+      <strong>Arabalar Yükleniyor...</strong>
+      <div class="spinner-border ms-auto" role="status" aria-hidden="true"></div>
+    </div>
+
+    <div *ngFor="let car of cars | carFilterPipe:colorFilter:brandFilter | carLimitPipe:8" class="item col-md-3 col-sm-4">
+      <div class="card h-100">     
+        <img src="{{carImagePath + car.coverPhotoPath}}" class="card-img-top" alt="...">
+        <div class="card-body">
+          <h5 class="card-title">{{car.brandName}}</h5>
+          <p class="card-text">{{car.description}}</p>
+          <p class="card-text"><b>Günlük Fiyat : </b>{{car.dailyPrice | currency:"TRY":"₺"}}</p>
+          <a routerLink="/car/{{car.carId}}" class="btn btn-primary">Aracı İncele</a>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="!(cars | carFilterPipe:colorFilter:brandFilter).length && !errorMessage && carsLoaded" class="item col-md-12 alert alert-danger" role="alert">
+      Bu filtreye sahip araba bulunmuyor.
+    </div>
+
+    <div *ngIf="errorMessage" class="item col-md-12 alert alert-danger" role="alert">
+      {{errorMessage}}
+    </div>
+
+    <div class="item col-md-12 text-center">
+      <hr>
+      <b class="clear-selection" routerLink="/cars">Tüm arabaları görmek için tıklayınız.</b>
+    </div>
+  
+  </div>
+</div>
