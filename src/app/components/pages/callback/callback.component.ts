@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CallbackForm } from 'src/app/models/callbackForm';
+import { LocalStorageService } from 'src/app/services/local-storage.service';
 import { PaymentService } from 'src/app/services/payment.service';
 
 @Component({
@@ -10,10 +11,10 @@ import { PaymentService } from 'src/app/services/payment.service';
 export class CallbackComponent implements OnInit {
 
   callbackForm:CallbackForm = {token:"", paymentStatus:"", status:"", errorMessage:""};
-  constructor(private paymentService:PaymentService) { }
+  constructor(private paymentService:PaymentService, private storageService:LocalStorageService) { }
 
   ngOnInit(): void {
-    this.getCallback(localStorage.getItem("token"));
+    this.getCallback(this.storageService.getItem("paymentToken"));
   }
 
   getCallback(token:any){

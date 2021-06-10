@@ -1,0 +1,9 @@
+<app-navbar *ngIf="isLoggin"></app-navbar>
+<div class="container-fluid">
+    <div class="row">
+        <app-sidebar *ngIf="isLoggin"></app-sidebar>
+        <main [class]="getCurrentClass()">
+            <router-outlet></router-outlet>
+        </main>
+    </div>
+</div>

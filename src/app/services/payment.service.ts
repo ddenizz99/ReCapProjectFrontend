@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 import { CallbackForm } from '../models/callbackForm';
 import { PaymentForm } from '../models/paymentForm';
 
@@ -9,16 +10,15 @@ import { PaymentForm } from '../models/paymentForm';
 })
 export class PaymentService {
 
-  apiUrl = 'https://localhost:44306/api/';
   constructor(private httpClient:HttpClient) { }
 
   payment():Observable<PaymentForm>{
-    let newPath = this.apiUrl + "payments/payment";
+    let newPath = environment.getApiUrl + "payments/payment";
     return this.httpClient.get<PaymentForm>(newPath);
   }
 
   callback(token:any):Observable<CallbackForm>{
-    let newPath = this.apiUrl + "payments/callback?token=" + token;
+    let newPath = environment.getApiUrl + "payments/callback?token=" + token;
     return this.httpClient.get<CallbackForm>(newPath);
   }
 }

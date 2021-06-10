@@ -2,6 +2,7 @@ import { DOCUMENT } from '@angular/common';
 import { Component, Inject, OnInit, Renderer2 } from '@angular/core';
 import { Router } from '@angular/router';
 import { PaymentForm } from 'src/app/models/paymentForm';
+import { LocalStorageService } from 'src/app/services/local-storage.service';
 import { PaymentService } from 'src/app/services/payment.service';
 
 @Component({
@@ -27,7 +28,7 @@ export class PaymentComponent implements OnInit {
   constructor(
     private _renderer2: Renderer2, 
     @Inject(DOCUMENT) private _document: Document,
-    private paymentService:PaymentService,private route:Router) { }
+    private paymentService:PaymentService,private route:Router,private storageService:LocalStorageService) { }
 
   ngOnInit(): void {
     this.getPayment();
@@ -39,7 +40,7 @@ export class PaymentComponent implements OnInit {
       console.log(response);
       if (response.status == "success") {
         this.setScriptCode(response.checkoutFormContent);
-        localStorage.setItem("token" , response.token);
+        this.storageService.setItem("paymentToken", response.token);
       }else{
         console.log(response.errorMessage);
       }

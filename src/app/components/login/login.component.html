@@ -1,0 +1,25 @@
+<main class="form-signin text-center">
+    <form [formGroup]="loginForm">
+      <img class="mb-4" src="./assets/dark-logo.png" alt="" width="150">
+      <h1 class="h3 mb-3 fw-normal">Giriş Yap</h1>
+  
+      <div class="form-floating">
+        <input type="email" class="form-control" id="email" formControlName="email" placeholder="name@example.com">
+        <label for="email">E-posta</label>
+        <span style="color: brown;" *ngIf="emailInRequired">Mail adresiniz boş olamaz.</span>
+      </div>
+      <div class="form-floating">
+        <input type="password" class="form-control" id="password" formControlName="password" placeholder="Password">
+        <label for="password">Şifre</label>
+        <span style="color: brown;" *ngIf="passwordInRequired">Şifreniz boş olamaz.</span>
+      </div>
+  
+      <div class="checkbox mb-3">
+        <label>
+          <input type="checkbox" value="remember-me"> Beni hatırla
+        </label>
+      </div>
+      <button class="w-100 btn btn-lg btn-primary" type="button" (click)="login()">Giriş Yap</button>
+      <p class="mt-5 mb-3 text-muted">&copy; 2017–2021</p>
+    </form>
+  </main> 
